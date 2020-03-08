@@ -29,8 +29,6 @@
 
         <maven.pmd.plugin.version>3.12.0</maven.pmd.plugin.version>
 
-
-
     </properties>
 
 
@@ -274,7 +272,7 @@
                     <archive>
                         <manifest>
                             <!-- Jar file entry point -->
-                            <mainClass>com.knoldus.day1.view.AppDriver</mainClass>
+                            <mainClass>com.knoldus.TweetExtractor</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -306,13 +304,10 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
-
-
 </project>

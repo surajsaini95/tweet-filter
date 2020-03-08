@@ -10,7 +10,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterInstanceImpl implements TwitterInstance {
 
     /**
-     * method getTwitterInstance can be used to get the instance of Twitter
+     * method getTwitterInstance can be used to get the instance of Twitter.
      *
      * @return the instance of type Twitter
      */
