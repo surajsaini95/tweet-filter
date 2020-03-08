@@ -2,7 +2,6 @@ package com.knoldus;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
@@ -26,5 +25,6 @@ public class TwitterInstanceImpl implements TwitterInstance {
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter twitter = tf.getInstance();
         return twitter;
+
     }
 }
