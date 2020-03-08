@@ -2,6 +2,7 @@ package com.knoldus;
 
 import twitter4j.Status;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +16,8 @@ public interface TweetFilter {
 
     List<Status> getTweetsWithHighLikes(String hashTag);
 
-    List<Status> getTweetsOnDate(String hashTag,Date date);
+    List<Status> getTweetsOnDate(String hashTag, LocalDate localDate);
 
-    int getLikesOnHashTagByInterval(String hashTag,int minutes);
+    long getLikesOnHashTagByInterval(String hashTag,long minutes);
 
 }

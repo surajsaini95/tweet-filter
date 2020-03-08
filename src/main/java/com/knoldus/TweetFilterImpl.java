@@ -2,6 +2,10 @@ package com.knoldus;
 
 import twitter4j.Status;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -49,12 +53,31 @@ public class TweetFilterImpl implements TweetFilter {
     }
 
     @Override
-    public List<Status> getTweetsOnDate(String hashTag, Date date) {
-        return null;
+    public List<Status> getTweetsOnDate(String hashTag, LocalDate localDate) {
+        return readTwitterStatus.getTwitterStatus(hashTag)
+                .stream()
+                .filter(status -> status.getCreatedAt()
+                                        .toInstant()
+                                        .atZone(ZoneId.systemDefault())
+                                        .toLocalDate().isEqual(localDate))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public int getLikesOnHashTagByInterval(String hashTag, int minutes) {
-        return 0;
+    public long getLikesOnHashTagByInterval(String hashTag, long minutes) {
+
+        return readTwitterStatus.getTwitterStatus(hashTag)
+                .stream()
+                .filter(status -> check(status.getCreatedAt(),minutes)).count();
+    }
+    private boolean check(Date postDate,long minutes){
+        Date date = new Date();
+        LocalDateTime present = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime past = present.minusMinutes(minutes);
+        /*System.out.println("present : "+present);
+        System.out.println("past : "+past);
+*/
+        LocalDateTime dateToCheck = postDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return  dateToCheck.isAfter(past)&&dateToCheck.isBefore(present);
     }
 }
