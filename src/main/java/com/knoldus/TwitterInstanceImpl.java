@@ -1,12 +1,10 @@
 package com.knoldus;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 /**
  * TwitterInstanceImpl provides the definitions for methods in TwitterInstance.
@@ -21,23 +19,14 @@ public class TwitterInstanceImpl implements TwitterInstance {
     @Override
     public Twitter getTwitterInstance() {
 
+        Config configFactory = ConfigFactory.load();
         ConfigurationBuilder cb = new ConfigurationBuilder();
-        try (InputStream input = TwitterInstanceImpl.class.getClassLoader().getResourceAsStream("twitterConfig.properties")) {
-            Properties prop = new Properties();
-            if (input == null) {
-                System.out.println("Sorry, unable to find twitterConfig.properties");
-            } else {
-                prop.load(input);
-                cb.setDebugEnabled(true)
-                        .setOAuthConsumerKey(prop.getProperty("consumer.key"))
-                        .setOAuthConsumerSecret(prop.getProperty("consumer.secret"))
-                        .setOAuthAccessToken(prop.getProperty("token.key"))
-                        .setOAuthAccessTokenSecret(prop.getProperty("token.secret"));
+        cb.setDebugEnabled(true)
+                .setOAuthConsumerKey(configFactory.getString("consumer.key"))
+                .setOAuthConsumerSecret(configFactory.getString("consumer.secret"))
+                .setOAuthAccessToken(configFactory.getString("token.key"))
+                .setOAuthAccessTokenSecret(configFactory.getString("token.secret"));
 
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         TwitterFactory tf = new TwitterFactory(cb.build());
         return tf.getInstance();
     }

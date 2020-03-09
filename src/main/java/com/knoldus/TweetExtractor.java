@@ -43,7 +43,7 @@ public class TweetExtractor {
         list.forEach((status) -> System.out.println(status.getId() + "\t\t" + status.getCreatedAt()));
 
         System.out.print("\n\nlikes on a particular keyword : ");
-        long intervalInMinutes = 20;
+        long intervalInMinutes = 15;
         hashTag = "#srk";
         long likesCount = tweetFilter.getLikesOnHashTagByInterval(hashTag, intervalInMinutes);
         System.out.println(likesCount);
