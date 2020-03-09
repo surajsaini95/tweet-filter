@@ -22,11 +22,13 @@ public class TwitterStatusImpl implements TwitterStatus {
      * getTwitterStatus can be used to retrieve a list of twitter status based on a hasTag.
      *
      * @param hashTag on which the post will be retrieved.
+     * @param limit   the number of  posts that will be retrieved.
      * @return list of status retrieved.
      */
     @Override
-    public List<Status> getTwitterStatus(String hashTag) {
+    public List<Status> getTwitterStatus(String hashTag, int limit) {
         Query query = new Query(hashTag);
+        query.setCount(limit);
         List<Status> list = new ArrayList<>();
         try {
             list = twitterInstance.getTwitterInstance().search(query).getTweets();

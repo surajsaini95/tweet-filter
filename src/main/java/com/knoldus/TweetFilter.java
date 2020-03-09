@@ -24,9 +24,10 @@ public interface TweetFilter {
      *
      * @param hashTag on which the post will be retrieved.
      * @param limit   is used to specify the upper bound on the length of the list that will be returned.
+     * @param offset  is used to specify the number of tweets to drop from the start of list that will be returned.
      * @return list of status retrieved.
      */
-    List<Status> getOlderTweets(String hashTag, long limit);
+    List<Status> getOlderTweets(String hashTag, long limit, long offset);
 
     /**
      * getTweetsWithHighReTweets gets the posts sorted with highest number of ReTweets.

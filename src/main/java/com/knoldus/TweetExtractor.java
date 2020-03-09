@@ -15,14 +15,15 @@ public class TweetExtractor {
         TweetFilter tweetFilter = new TweetFilterImpl(new TwitterStatusImpl(new TwitterInstanceImpl()));
         List<Status> list;
         String hashTag = "#suraj";
-        int limit = 15;
+        int limit = 5;
 
         System.out.println("\nLatest Tweets");
         list = tweetFilter.getLatestTweets(hashTag, limit);
         list.forEach((status) -> System.out.println(status.getId() + "\t\t" + status.getCreatedAt()));
 
         System.out.println("\n\nOlder Tweets");
-        list = tweetFilter.getOlderTweets(hashTag, limit);
+        long offset = 1;
+        list = tweetFilter.getOlderTweets(hashTag, limit, offset);
         list.forEach((status) -> System.out.println(status.getId() + "\t\t" + status.getCreatedAt()));
 
         System.out.println("\n\nHigh ReTweets");

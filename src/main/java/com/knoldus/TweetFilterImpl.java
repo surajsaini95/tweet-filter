@@ -30,7 +30,7 @@ public class TweetFilterImpl implements TweetFilter {
      */
     @Override
     public List<Status> getLatestTweets(String hashTag, long limit) {
-        return readTwitterStatus.getTwitterStatus(hashTag)
+        return readTwitterStatus.getTwitterStatus(hashTag, (int) limit)
                 .stream().limit(limit).collect(Collectors.toList());
 
     }
@@ -43,11 +43,13 @@ public class TweetFilterImpl implements TweetFilter {
      * @return list of status retrieved.
      */
     @Override
-    public List<Status> getOlderTweets(String hashTag, long limit) {
-        return readTwitterStatus.getTwitterStatus(hashTag)
+    public List<Status> getOlderTweets(String hashTag, long limit, long offset) {
+        int count = 100;
+        return readTwitterStatus.getTwitterStatus(hashTag, count)
                 .stream()
                 .sorted(Comparator.comparing(Status::getCreatedAt))
                 .limit(limit)
+                .skip(offset)
                 .collect(Collectors.toList());
     }
 
@@ -59,7 +61,8 @@ public class TweetFilterImpl implements TweetFilter {
      */
     @Override
     public List<Status> getTweetsWithHighReTweets(String hashTag) {
-        return readTwitterStatus.getTwitterStatus(hashTag)
+        int count = 100;
+        return readTwitterStatus.getTwitterStatus(hashTag, count)
                 .stream()
                 .sorted(Comparator.comparing(Status::getRetweetCount).reversed())
                 .collect(Collectors.toList());
@@ -73,7 +76,8 @@ public class TweetFilterImpl implements TweetFilter {
      */
     @Override
     public List<Status> getTweetsWithHighLikes(String hashTag) {
-        return readTwitterStatus.getTwitterStatus(hashTag)
+        int count = 100;
+        return readTwitterStatus.getTwitterStatus(hashTag, count)
                 .stream()
                 .sorted(Comparator.comparing(Status::getFavoriteCount).reversed())
                 .collect(Collectors.toList());
@@ -88,7 +92,8 @@ public class TweetFilterImpl implements TweetFilter {
      */
     @Override
     public List<Status> getTweetsOnDate(String hashTag, LocalDate localDate) {
-        return readTwitterStatus.getTwitterStatus(hashTag)
+        int count = 100;
+        return readTwitterStatus.getTwitterStatus(hashTag, count)
                 .stream()
                 .filter(status -> status.getCreatedAt()
                         .toInstant()
@@ -106,7 +111,8 @@ public class TweetFilterImpl implements TweetFilter {
      */
     @Override
     public long getLikesOnHashTagByInterval(String hashTag, long minutes) {
-        return readTwitterStatus.getTwitterStatus(hashTag)
+        int count = 100;
+        return readTwitterStatus.getTwitterStatus(hashTag, count)
                 .stream()
                 .filter(status -> validatePostTiming(status.getCreatedAt(), minutes))
                 .count();
