@@ -1,7 +1,5 @@
 # Assignments Java8
 
-## Main Assignment
-
 ### Create a mini application using Twitter API and do the following operations. 
    
    1. Latest Post (Newer to Older) with limit
